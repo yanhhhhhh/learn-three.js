@@ -4,11 +4,9 @@ import {
 	Scene,
 	PerspectiveCamera,
 	WebGLRenderer,
-	
-  LineBasicMaterial,
-  Vector3,
-  BufferGeometry,
-  Line,
+	BoxGeometry,
+	MeshBasicMaterial,
+	Mesh,
 } from "three";
 /**
  * 1. 创建场景对象scene
@@ -16,36 +14,28 @@ import {
  * 3.创建渲染对象 renderer
  * 4.创建一个立方体几何对象Geometry
  */
-// 场景
+
 const scene = new Scene();
-// 相机
 const camera = new PerspectiveCamera(
 	75,
 	window.innerWidth / window.innerHeight,
 	0.1,
 	10000
 );
-camera.position.set(0,0,100);
-
-// 渲染器
+camera.position.z = 10;
 const renderer = new WebGLRenderer();
 //
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
+const geometry = new BoxGeometry(1, 1, 1);
+const material = new MeshBasicMaterial({ color: 0x00ff00 });
+const cube = new Mesh(geometry, material);
+scene.add(cube);
 
-
-const merterial =  new LineBasicMaterial({color:0x0000ff})
-const points = []
-points.push(new Vector3(-10,0,0))
-points.push(new Vector3(0,10,0))
-points.push(new Vector3(10,0,0))
-console.log('point',points);
-
-const geometry = new BufferGeometry().setFromPoints(points)
-const line = new Line(geometry,merterial)
-scene.add(line)
-console.log('line',line);
-
-renderer.render(scene,camera)
-
-
+function animate() {
+	requestAnimationFrame(animate);
+	cube.rotation.x += 0.01;
+	cube.rotation.y += 0.01;
+	renderer.render(scene, camera);
+}
+animate();
