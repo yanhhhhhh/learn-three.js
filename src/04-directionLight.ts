@@ -34,7 +34,9 @@ function createInstance(
 	color: ColorRepresentation,
 	x: number
 ) {
+	// 该材质需要灯光
 	const material = new MeshPhongMaterial({ color });
+
 	const cube = new Mesh(geometry, material);
 	scene.add(cube);
 	cube.position.x = x;
